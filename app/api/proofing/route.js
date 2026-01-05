@@ -7,23 +7,27 @@ export async function GET() {
       include: {
         image: {
           include: {
-            category: true, // Include the category information
+            category: true,
           },
         },
       },
     });
 
-    if (!photoSession) {
-      return new NextResponse.JSON(
+    if (!photoSession || photoSession.length === 0) {
+      return NextResponse.json(
         { message: "There is no photo session available yet!" },
         { status: 404 }
       );
     }
 
-    return new NextResponse(JSON.stringify(photoSession), { status: 200 });
+    return NextResponse.json(photoSession, { status: 200 });
+    
   } catch (error) {
-    return NextResponse.error(`Error getting driver: ${error}`, {
-      status: 500,
-    });
+    console.error("Fetch error:", error);
+    
+    return NextResponse.json(
+      { error: "Internal Server Error", details: error.message },
+      { status: 500 }
+    );
   }
 }
