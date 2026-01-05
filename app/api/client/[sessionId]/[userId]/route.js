@@ -6,7 +6,6 @@ export async function GET(request) {
   const sessionId = searchParams.get("sessionId");
   const userId = searchParams.get("userId");
 
-  console.log(sessionId);
 
   try {
     const images = await prisma.image.findMany({
