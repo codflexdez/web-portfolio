@@ -1,7 +1,6 @@
 import fs from "fs";
 import classes from "@styles/gallery.module.css";
 import path from "path";
-import Image from "next/image";
 
 const GetPortfolio = ({ params }) => {
   const pathname = params.category;
@@ -22,7 +21,6 @@ const GetPortfolio = ({ params }) => {
   }));
 
  
- 
   return (
     <main>
       <header className={classes.container_header}>
@@ -32,7 +30,7 @@ const GetPortfolio = ({ params }) => {
         {images != null ? (
           images.map((image) => (
             <div key={image.id}>
-              <Image src={image.src} alt={image.alt} width={800} height={533} blurDataURL="blur"/>
+              <img src={image.src} alt={image.alt}  />
             </div>
           ))
         ) : (
