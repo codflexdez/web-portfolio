@@ -1,41 +1,56 @@
-import prisma from "@lib/prisma";
+"use client";
+import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
+// import prisma from "@lib/prisma";
 import ClientsImg from "@components/ClientsImg";
-import classes from '@styles/clients.module.css';
+import classes from "@styles/clients.module.css";
 import FormUpload from "@components/FormUpload";
 
+const getImages = () => {
+  const path = usePathname();
 
+  const pathList = path.split("/");
+  const userId = parseInt(pathList[3]);
+  const sessionId = parseInt(pathList[4]);
+  const [images, setImages] = useState([]);
+  const [message, setMessage] = useState("");
 
-const getImages = async ({ params }) => {
-  const { uImages } = params;
-  let userId = parseInt(uImages[1]);
-  let sessionId = parseInt(uImages[2]);
-  
+  useEffect(() => {
+    fetchImages();
+  }, []);
 
-  if (!sessionId || !userId) {
-    sessionId = "";
-    userId = "";
-  }
+  const fetchImages = async () => {
+    try {
+      const response = await fetch(
+        `/api/client?sessionId=${sessionId}&userId=${userId}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setImages(data);
+      } else {
+        setMessage(
+          "There is no photo session available yet!",
+          response.statusText
+        );
+        setImages([]);
+      }
+    } catch (error) {
+      console.error("Error fetching favorited images:", error);
+      setImages([]);
+    }
+  };
 
-  const images = await prisma.image.findMany({
-    where: {
-      session: {
-        id: sessionId,
-        user_id: userId,
-      },
-    },
-  });
-
-
-return (
-  <section className={classes.flex}>
-    <FormUpload userId={userId} sessionId={sessionId}/>
+  return (
+    <section className={classes.flex}>
+      {message && <p>{message}</p>}
       {images.length > 0 ? (
-        images.map((img) => ( <>
-          <ClientsImg key={img.id} img={img} userId={userId} classes={classes} fill/>
-          </>
+        images.map((img) => (
+          <div key={img.id}>
+            <ClientsImg img={img} userId={userId} classes={classes} />
+          </div>
         ))
       ) : (
-        <FormUpload userId={userId} sessionId={sessionId}/>
+        <FormUpload userId={userId} sessionId={sessionId} />
       )}
     </section>
   );

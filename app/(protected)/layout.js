@@ -1,10 +1,12 @@
 "use client";
 import React from "react";
+import { Suspense } from "react";
 import classes from "@styles/login.module.css";
 import { useSession } from "next-auth/react";
 import Dashboard from "@components/Dashboard";
 import { useRouter, useParams } from "next/navigation";
 import { useEffect } from "react";
+import Loading from "./loading";
 
 const ProtectedLayout = ({ children }) => {
   const router = useRouter();
@@ -33,12 +35,14 @@ const ProtectedLayout = ({ children }) => {
   return (
     <section>
       <Dashboard session={session} />
-      {!session  ? (
+      {!session ? (
         <div className={classes.protected}>
           This page is protected and you do not have access to it!
         </div>
       ) : (
-        <aside>{children}</aside>
+        <Suspense fallback={<Loading />}>
+          <aside>{children}</aside>
+        </Suspense>
       )}
     </section>
   );

@@ -35,7 +35,10 @@ const Proofing = () => {
           <Link
             key={file.id}
             href={{
-              pathname: !session || session?.user.id !== file.user_id ? `/signin` : `/clients/[uName]/[uId]/[sId]`,
+              pathname:
+                !session || session?.user.id !== file.user_id
+                  ? `/signin`
+                  : `/clients/[uName]/[uId]/[sId]`,
             }}
             as={
               !session || session?.user.id !== file.user_id
