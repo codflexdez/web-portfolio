@@ -6,8 +6,13 @@ export async function GET(request) {
   const sessionId = searchParams.get("sessionId");
   const userId = searchParams.get("userId");
 
+
+  console.log(sessionId);
+  
+
   try {
-    // Ensure we have IDs before querying
+  
+
     if (!sessionId || !userId) {
       return NextResponse.json(
         { message: "Missing sessionId or userId" },
