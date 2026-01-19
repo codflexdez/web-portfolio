@@ -3,9 +3,14 @@
 .container_header {
   text-align: center;
   padding: 2rem 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
+.container_header h2 {
+  font-size: 2rem;
+  font-weight: 400;
+  color: #333;
+}
 
 .container_grid {
   column-count: 4;
@@ -13,6 +18,7 @@
   padding: 0 15px;
   max-width: 1400px;
   margin: 0 auto;
+  margin-bottom: 1.5rem;
 }
 
 .container_grid div {
