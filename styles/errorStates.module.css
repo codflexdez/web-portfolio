@@ -1,0 +1,120 @@
+/* errorStates.module.css */
+
+.stateContainer {
+  text-align: center;
+  padding: 3rem 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.stateIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.loadingIcon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+.stateTitle {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.loadingTitle {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.stateMessage {
+  color: #666;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.loadingMessage {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.retryButton {
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 0.25rem;
+    padding: 0.5rem 2rem;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    background-color: black;
+    border: 1px solid black;
+    color: white;
+    cursor: pointer;
+    font-weight: 400;
+    transition: opacity 0.2s, transform 0.1s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.retryButton:hover {
+  opacity: 0.8;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.retryButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.retryButton:focus {
+  outline: 2px solid #0056b3;
+  outline-offset: 2px;
+}
+
+.supportText {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #999;
+}
+
+/* Alternative color schemes for different error types */
+.warningButton {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.warningButton:hover {
+  background-color: #e0a800;
+}
+
+.dangerButton {
+  background-color: #dc3545;
+}
+
+.dangerButton:hover {
+  background-color: #c82333;
+}
+
+.successButton {
+  background-color: #28a745;
+}
+
+.successButton:hover {
+  background-color: #218838;
+}
