@@ -1,6 +1,7 @@
 import fs from "fs";
 import classes from "@styles/gallery.module.css";
 import path from "path";
+import GalleryImage from "@components/GalleryImage";
 
 const GetPortfolio = ({ params }) => {
   const pathname = params.category;
@@ -33,14 +34,8 @@ const GetPortfolio = ({ params }) => {
       </header>
       <section className={classes.container_grid}>
         {images.length > 0 ? (
-          images.map((image) => (
-            <div key={image.id}>
-              <img 
-                src={image.src} 
-                alt={image.alt}
-                loading="lazy"
-              />
-            </div>
+          images.map((image, index) => (
+            <GalleryImage key={image.id} image={image} index={index} />
           ))
         ) : (
           <p style={{ 

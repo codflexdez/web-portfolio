@@ -1,17 +1,14 @@
 /* gallery.module.css */
-
 .container_header {
   text-align: center;
   padding: 2rem 1rem;
   margin-bottom: 0.5rem;
 }
-
 .container_header h2 {
   font-size: 2rem;
   font-weight: 400;
   color: #333;
 }
-
 .container_grid {
   column-count: 4;
   column-gap: 15px;
@@ -21,14 +18,26 @@
   margin-bottom: 1.5rem;
 }
 
-.container_grid div {
+/* Image item with scroll animation */
+.image_item {
   break-inside: avoid;
   margin-bottom: 15px;
   position: relative;
   overflow: hidden;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-.container_grid img {
+/* Visible state when scrolled into view */
+.image_item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.image_item img {
   width: 100%;
   height: auto;
   display: block;
@@ -36,7 +45,7 @@
   cursor: pointer;
 }
 
-.container_grid img:hover {
+.image_item img:hover {
   transform: scale(1.02);
 }
 
@@ -46,7 +55,6 @@
     column-count: 3;
   }
 }
-
 @media (max-width: 768px) {
   .container_grid {
     column-count: 2;
@@ -54,11 +62,10 @@
     padding: 0 10px;
   }
   
-  .container_grid div {
+  .image_item {
     margin-bottom: 10px;
   }
 }
-
 @media (max-width: 480px) {
   .container_grid {
     column-count: 1;
