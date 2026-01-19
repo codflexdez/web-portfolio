@@ -1,6 +1,9 @@
 import prisma from "@lib/prisma";
 import { NextResponse } from "next/server";
 
+// Prevent static optimization to avoid prerender issues
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const photoSession = await prisma.session.findMany({
@@ -13,11 +16,9 @@ export async function GET() {
       },
     });
 
+  
     if (!photoSession || photoSession.length === 0) {
-      return NextResponse.json(
-        { message: "There is no photo session available yet!" },
-        { status: 404 }
-      );
+      return NextResponse.json([], { status: 200 });
     }
 
     return NextResponse.json(photoSession, { status: 200 });
