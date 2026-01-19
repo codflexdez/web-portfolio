@@ -8,18 +8,23 @@ const GetPortfolio = ({ params }) => {
     process.cwd(),
     `public/assets/img/${pathname}`
   );
-
-  const files = fs.readdirSync(directoryPath);
-  const imageFiles = files.filter((file) =>
-    /\.(jpg|jpeg|png|gif|webp)$/i.test(file)
-  );
-
-  const images = imageFiles.map((file, index) => ({
-    id: index,
-    src: `/assets/img/${pathname}/${file}`,
-    alt: file.split(".")[0],
-  }));
-
+  
+  let images = [];
+  
+  try {
+    const files = fs.readdirSync(directoryPath);
+    const imageFiles = files.filter((file) =>
+      /\.(jpg|jpeg|png|gif|webp)$/i.test(file)
+    );
+    
+    images = imageFiles.map((file, index) => ({
+      id: index,
+      src: `/assets/img/${pathname}/${file}`,
+      alt: file.split(".")[0],
+    }));
+  } catch (error) {
+    console.error("Error reading directory:", error);
+  }
  
   return (
     <main>
@@ -27,14 +32,25 @@ const GetPortfolio = ({ params }) => {
         <h2>{pathname}</h2>
       </header>
       <section className={classes.container_grid}>
-        {images != null ? (
+        {images.length > 0 ? (
           images.map((image) => (
             <div key={image.id}>
-              <img src={image.src} alt={image.alt}  />
+              <img 
+                src={image.src} 
+                alt={image.alt}
+                loading="lazy"
+              />
             </div>
           ))
         ) : (
-          <p>No images found</p>
+          <p style={{ 
+            gridColumn: '1 / -1', 
+            textAlign: 'center', 
+            padding: '2rem',
+            color: '#666'
+          }}>
+            No images found in this gallery
+          </p>
         )}
       </section>
     </main>
