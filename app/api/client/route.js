@@ -1,21 +1,30 @@
 import prisma from "@lib/prisma";
 import { NextResponse } from "next/server";
 
+// Prevent static optimization to avoid prerender issues
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const sessionId = searchParams.get("sessionId");
   const userId = searchParams.get("userId");
-
-
-  console.log(sessionId);
   
-
   try {
-  
-
+    // Validate required parameters
     if (!sessionId || !userId) {
       return NextResponse.json(
-        { message: "Missing sessionId or userId" },
+        { error: "Missing required parameters", message: "Both sessionId and userId are required" },
+        { status: 400 }
+      );
+    }
+
+    // Parse and validate IDs are valid numbers
+    const parsedSessionId = parseInt(sessionId);
+    const parsedUserId = parseInt(userId);
+
+    if (isNaN(parsedSessionId) || isNaN(parsedUserId)) {
+      return NextResponse.json(
+        { error: "Invalid parameters", message: "sessionId and userId must be valid numbers" },
         { status: 400 }
       );
     }
@@ -23,27 +32,23 @@ export async function GET(request) {
     const images = await prisma.image.findMany({
       where: {
         session: {
-          id: parseInt(sessionId),
-          user_id: parseInt(userId),
+          id: parsedSessionId,
+          user_id: parsedUserId,
         },
       },
     });
 
+    // Return empty array instead of 404 to avoid prerender issues
     if (!images || images.length === 0) {
-      return NextResponse.json(
-        { message: "There is no photo session available yet!" },
-        { status: 404 }
-      );
+      return NextResponse.json([], { status: 200 });
     }
-
    
     return NextResponse.json(images, { status: 200 });
     
   } catch (error) {
-    console.error(error);
-
+    console.error("Error getting images:", error);
     return NextResponse.json(
-      { error: "Error getting images", details: error.message },
+      { error: "Internal Server Error", details: error.message },
       { status: 500 }
     );
   }

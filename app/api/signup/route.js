@@ -1,6 +1,9 @@
 import prisma from "@lib/prisma";
 import { NextResponse } from "next/server";
 
+// Prevent static optimization to avoid prerender issues
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const privileges = await prisma.privilege.findMany();

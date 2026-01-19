@@ -2,6 +2,9 @@ import { mailOptions, transporter } from "@lib/nodemailer";
 import { NextResponse } from "next/server";
 import fs from "fs";
 
+// Prevent static optimization to avoid prerender issues
+export const dynamic = 'force-dynamic';
+
 const generateEmailContent = (data) => {
   const contact_msg_fields = {
     name: "Name",

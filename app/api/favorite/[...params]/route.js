@@ -1,6 +1,10 @@
 import prisma from "@lib/prisma";
 import { NextResponse } from "next/server";
 
+// Prevent static optimization to avoid prerender issues
+export const dynamic = 'force-dynamic';
+
+
 export async function GET(request) {
   const path = request.nextUrl.pathname.split("/");
   const userId = path[path.length - 1];
