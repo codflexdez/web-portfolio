@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import classes from "@styles/contact.module.css";
 import { sendContactForm } from "@lib/mailApi";
+//import Image from "@node_modules/next/image";
+//import contactImg from "../../public/assets/img/0019666-road.jpg";
 
 const initValues = { name: "", email: "", subject: "", message: "" };
 const initState = {
@@ -80,8 +82,6 @@ export default function Contact() {
     setState((prev) => ({ ...prev, isLoading: true }));
 
     try {
-      // await sendContactForm(values);
-      // setState(initState);
       await sendContactForm(values);
       setState((prev) => ({ ...prev, ...initState, isFormSubmitted: true }));
 
@@ -189,6 +189,7 @@ export default function Contact() {
         </button>
       </form>
       <aside className={classes.aside}>
+        
         <p>
           Your journey starts here. I would love to hear more about you and your
           photo request. Please take your time and send me as much information

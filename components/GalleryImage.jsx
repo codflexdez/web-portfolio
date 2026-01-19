@@ -6,6 +6,7 @@ const GalleryImage = ({ image, index }) => {
   const imageRef = useRef(null);
   const [shouldAnimate, setShouldAnimate] = useState(true);
 
+
   useEffect(() => {
     const element = imageRef.current;
     if (!element) return;

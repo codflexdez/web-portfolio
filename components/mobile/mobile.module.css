@@ -5,14 +5,10 @@
 }
 
 .mobileDropbox{
-  /* position: absolute; */
   display: flex;
   flex-direction: column;
   gap: 1rem;
-
 }
-
-
 
 .social_media {
  position: fixed;
